@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import { colors } from '../global/colors';
 
-const Header = () => {
+const Header = ({subtitle}) => {
 
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.title}>Fulbo</Text>
+      <Text style={styles.subtitle}>{subtitle}</Text>
     </View>
   )
 }
@@ -15,7 +16,7 @@ export default Header
 const styles = StyleSheet.create({
     headerContainer: {
         width: '100%',
-        height: 100,
+        height: 115,
         paddingTop: 50,
         backgroundColor: colors.Verde,
         alignItems: 'center',
@@ -28,8 +29,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 21
     },
-    access: {
-      alignSelf: 'flex-end',
-      paddingRight: 16
-    }
+    subtitle:{
+      fontSize:18,
+      fontWeight: 'bold',
+      color:colors.Negro,
+      marginTop: 10,
+      marginBottom: 10,
+    },
 })
