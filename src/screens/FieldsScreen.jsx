@@ -1,9 +1,7 @@
 import { FlatList, StyleSheet, Text, View, Image, Pressable, ActivityIndicator } from 'react-native'
 import canchas from '../data/canchas.json'
 import FlatCard from '../components/FlatCard'
-import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
-import { useEffect, useState } from 'react';
+
 
 const FieldsScreen = ({navigation}) => {    
 

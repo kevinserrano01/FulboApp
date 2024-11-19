@@ -4,8 +4,18 @@ import MapView, { Marker } from 'react-native-maps';
 const FieldDetailsScreen = ({route}) => {
   const { nombre, ubicacion, tipo, coordenadas, descripcion, precio, opiniones } = route.params;
 
-  return (
-    <ScrollView style={styles.container}>
+  const renderOpinionItem = ({ item }) => (
+    <View style={styles.opinionContainer}>
+      <View style={styles.opinionHeader}>
+        <Text style={styles.opinionUser}>{item.usuario}</Text>
+        <Text style={styles.opinionRating}>{item.puntuacion} ⭐</Text>
+      </View>
+      <Text style={styles.opinionComment}>{item.comentario}</Text>
+  </View>
+  );
+
+  const ListHeaderComponent = () => (
+    <View style={styles.detailsContainer}>
       {coordenadas && (
         <MapView
           style={styles.map}
@@ -23,52 +33,77 @@ const FieldDetailsScreen = ({route}) => {
           />
         </MapView>
       )}
-      <View style={styles.detailsContainer}>
-        <Text style={styles.title}> 📌 {nombre}</Text>
-        <Text style={styles.info}>📍 {ubicacion}</Text>
-        <Text style={styles.info}> ⚽️ {tipo}</Text>
-        <Text style={styles.info}> ⚽️ {descripcion}</Text>
-        <Text style={styles.info}> ⚽️ {precio}</Text>
-        <Text style={styles.info}> Opiniones </Text>
-        <FlatList 
-          data={opiniones}
-          keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => (
-            <View>
-              <Text>{item.usuario}</Text>
-              <Text>{item.comentario}</Text>
-              <Text>{item.puntuacion}</Text>
-            </View>
-          )}
-        />
+      <Text style={styles.title}> 📌 {nombre}</Text>
+      <Text style={styles.info}> • {ubicacion}</Text>
+      <Text style={styles.info}> • {tipo}</Text>
+      <Text style={styles.info}> • {descripcion}</Text>
+      <Text style={styles.info}> • Precio por hora: {precio}</Text>
+      <Text style={styles.opiniones}>  Opiniones </Text>
+    </View>
+  );
 
-      </View>
-      
-      
-    </ScrollView>
-  )
-}
+  return (
+    <FlatList
+      data={opiniones}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={renderOpinionItem}
+      ListHeaderComponent={ListHeaderComponent}
+      contentContainerStyle={styles.container}
+    />
+  );
+};
 
 export default FieldDetailsScreen
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  map: {
+    width: '100%',
+    height: 550,
+    marginBottom: 20,
   },
   detailsContainer: {
-    padding: 20,
+    marginBottom: 20,
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 10,
-  },
-  map: {
-    width: '100%',
-    height: 600,
+    marginBottom: 10,
+    padding: 10,
   },
   info: {
+    fontSize: 16,
+    marginBottom: 5,
+    padding: 10,
+  },
+  opinionContainer: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  opinionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+  },
+  opinionUser: {
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  opinionRating: {
+    color: '#888',
+    fontSize: 12,
+  },
+  opinionComment: {
+    fontSize: 14,
+    color: '#333',
+  },
+  opiniones: {
     fontSize: 20,
-    marginTop: 10,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    padding: 10,
+    textAlign: 'center',
+    paddingTop: 20,
   },
 })
