@@ -4,7 +4,7 @@ import AuthNavigator from './AuthNavigator'
 import TabNavigator from './TabNavigator'
 
 const MainNavigator = () => {
-    const [user, setUser] = useState("Kevin");
+    const [user, setUser] = useState("KevinSerrano");
 
   return (
     <NavigationContainer>
