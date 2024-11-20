@@ -1,9 +1,10 @@
 import { FlatList, StyleSheet, Text, View, Image, Pressable, ActivityIndicator } from 'react-native'
-import canchas from '../data/canchas.json'
 import FlatCard from '../components/FlatCard'
+import { useGetFieldsQuery } from '../services/fieldsService'
 
 
-const FieldsScreen = ({navigation}) => {    
+const FieldsScreen = ({navigation}) => {
+    const { data:fields, error, isLoading } = useGetFieldsQuery();
 
     const renderFieldItem = ({item}) => {    
       return (
@@ -21,15 +22,17 @@ const FieldsScreen = ({navigation}) => {
     };
   return (
     <>
-      { canchas.length > 0 ?
+        {
+            isLoading && <ActivityIndicator size="large" color="#0000ff" />
+        }
+        {
+            error && <Text>Error: Error al cargar las canchas</Text>
+        }
         <FlatList
-          data={canchas}
+          data={fields}
           keyExtractor={item => item.id.toString()}
           renderItem={renderFieldItem}
         />
-        :
-        <Text>Error al cargar las canchas.</Text>
-      }
     </>
   )
 }
