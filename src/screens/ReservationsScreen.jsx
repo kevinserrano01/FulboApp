@@ -1,54 +1,56 @@
-import { FlatList, StyleSheet, Text, View, Button } from 'react-native'
+import { FlatList, StyleSheet, Text, View, Button, Pressable, ActivityIndicator } from 'react-native'
 import { colors } from '../global/colors'
 import  Icon  from 'react-native-vector-icons/MaterialIcons'
 import FlatCard from '../components/FlatCard'
-import reservas from '../data/reservas.json'
+import { useGetReservationsQuery } from '../services/reservationsService'
+import { useDispatch } from 'react-redux'
+import { removeReservation } from '../features/reservations/reservationSlice'
 
 const ReservationsScreen = ({navigation}) => {
+    const { data: reservations, error, isLoading } = useGetReservationsQuery();
+    const dispatch = useDispatch()
 
   const renderReservationItem = ({item}) => {
-    // dateOptions ={
-    //   year: 'numeric',
-    //   month: '2-digit', 
-    //   day: '2-digit',     
-    //   hour: '2-digit',      
-    //   minute: '2-digit', 
-    //   hour12: false       
-    // };
-
     return (
       <FlatCard style={styles.receiptContainer}>
         <Text style={styles.title}>Reserva nro: {item.id}</Text>
-        {/* <Text style={styles.date}>Creado el {new Date(item.createdAt).toLocaleString('es-Ar',dateOptions)} Hs.</Text> */}
         <Text style={styles.date}>Creado el {item.createdAt} Hs.</Text>
         <Text style={styles.total}> {item.items[0].name} </Text>
         <Text style={styles.total}> {item.items[0].location} </Text>
         <Text style={styles.total}> {item.items[0].type} </Text>
         <Text style={styles.total}> {item.items[0].day} </Text>
-
+        <Pressable 
+          style={styles.buttomRemoveReservation}
+          onPress={() => dispatch(removeReservation(item.id))}
+        >
+          <Text style={styles.textRemoveReservation}>Eliminar reserva</Text>
+        </Pressable>
       </FlatCard>
     )
   }
 
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#0000ff" />
+  }
+
+  if (error) {
+    return <Text>Error: Error al cargar las Reservas</Text>
+  }
+
+  if (!reservations || reservations.length === 0) {
+    <View style={styles.container}>
+        <Icon name="receipt-long" size={100} color="#ccc" />
+        <Text style={styles.cartScreenTitle}>Sin reservas</Text>
+        <Button title="Explorar canchas" onPress={() => navigation.navigate('Explorar')} />
+    </View>
+  }
+
   return (
-    <>
-      {
-        reservas.length > 0 ? 
-          <FlatList
-          data={reservas}
+        <FlatList
+          data={reservations}
           keyExtractor={item => item.id}
           renderItem={renderReservationItem}
         />
-        :
-        <View style={styles.container}>
-            <Icon name="receipt-long" size={100} color="#ccc" />
-            <Text style={styles.cartScreenTitle}>Sin reservas</Text>
-            <Button title="Explorar canchas" onPress={() => navigation.navigate('Explorar')} />
-        </View>
-      }
-    </>
-    
-    
   )
 }
 
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     margin: 16,
     gap: 10,
-    height: 200,
+    height: 250,
     marginBottom: 10,
     marginLeft: 10,
     marginRight: 10,
@@ -81,8 +83,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   cartScreenTitle: {
-      fontSize: 18,
-      color: '#333',
-      marginVertical: 20,
-    },
+    fontSize: 18,
+    color: '#333',
+    marginVertical: 20,
+  },
+  buttomRemoveReservation: {
+    backgroundColor: colors.Rojo,
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  textRemoveReservation: {
+    color: colors.Blanco,
+    textAlign: 'center',
+  },
 })

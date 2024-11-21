@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  value: {
-    // Estado inicial de tus campos
-    field1: "",
-    field2: "",
-  },
-};
+const initialState = {};
 
 const fieldSlice = createSlice({
   name: "fields",
-  initialState,
+  initialState: {
+    value: {
+      name: "",
+      location: "",
+      price: "",
+    },
+  },
   reducers: {
     // actualiza el valor de un campo específico.
     setField: (state, action) => {

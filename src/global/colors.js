@@ -3,7 +3,7 @@ export const colors = {
   AzulClaro: "#3a4f76",
   Blanco: "#ffffff",
   Gris: "#c7c7c7",
-  Rojo: "#f7287b",
+  Rojo: "#FF2929",
   Verde: "#00CE15",
   Negro: "#000000",
   Amarillo: "#FFF100",
