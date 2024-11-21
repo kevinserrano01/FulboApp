@@ -1,16 +1,32 @@
-import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Pressable } from 'react-native'
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Pressable, Button } from 'react-native'
 import { useSelector } from 'react-redux';
 import { useGetFieldQuery } from '../services/fieldsService';
 import { colors } from '../global/colors';
 import  Icon  from 'react-native-vector-icons/MaterialIcons'
 import { Calendar } from 'react-native-calendars';
 import { useState } from 'react';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 
 const AlquilerScreen = () => {
     const fieldId = useSelector(state => state.fieldsReducer.value.fieldId);
     const { data: field, error, isLoading } = useGetFieldQuery(fieldId);
     const [selectedDate, setSelectedDate] = useState('');
+    const [selectedTime, setSelectedTime] = useState('');
+    const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+
+    const showTimePicker = () => {
+        setTimePickerVisibility(true);
+    };
+
+    const hideTimePicker = () => {
+        setTimePickerVisibility(false);
+    };
+
+    const handleConfirm = (time) => {
+        setSelectedTime(time.toLocaleTimeString());
+        hideTimePicker();
+    };
 
     if (isLoading) {
         return <ActivityIndicator size="large" color="#0000ff" />
@@ -58,6 +74,19 @@ const AlquilerScreen = () => {
                 <Icon name="schedule" size={40} color={colors.Verde} />
                 <Text style={styles.textHour}>Hora</Text>
             </View>
+            <View style={styles.containerHora}>
+                <Text style={styles.textHora}>{selectedTime}</Text>
+            </View>
+            <View style={styles.containerButtonHour}>
+                <Button title="Seleccionar Hora" onPress={showTimePicker} />
+                <DateTimePickerModal
+                    isVisible={isTimePickerVisible}
+                    mode="time"
+                    onConfirm={handleConfirm}
+                    onCancel={hideTimePicker}
+                />
+            </View>
+            
             <View style={styles.containerButon}>
                 <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>Confirmar</Text>
@@ -163,4 +192,14 @@ const styles = StyleSheet.create({
     textFecha: {
         fontSize: 20,
     },
+    containerHora: {
+        marginBottom: 10,
+        marginLeft: 60,
+    },
+    textHora: {
+        fontSize: 20,
+    },
+    containerButtonHour: {
+        marginBottom: 40,
+    }
 })
