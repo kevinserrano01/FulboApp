@@ -1,19 +1,23 @@
 import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Pressable, Button } from 'react-native'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useGetFieldQuery } from '../services/fieldsService';
 import { colors } from '../global/colors';
 import  Icon  from 'react-native-vector-icons/MaterialIcons'
 import { Calendar } from 'react-native-calendars';
 import { useState } from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { addReservation } from '../features/reservations/reservationSlice';
+import { usePostReservationMutation } from '../services/reservationsService';
 
 
-const AlquilerScreen = () => {
+const AlquilerScreen = ({navigation}) => {
     const fieldId = useSelector(state => state.fieldsReducer.value.fieldId);
     const { data: field, error, isLoading } = useGetFieldQuery(fieldId);
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedTime, setSelectedTime] = useState('');
     const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+    const [triggerPost, result] = usePostReservationMutation();
+    dispatch = useDispatch();
 
     const showTimePicker = () => {
         setTimePickerVisibility(true);
@@ -26,6 +30,12 @@ const AlquilerScreen = () => {
     const handleConfirm = (time) => {
         setSelectedTime(time.toLocaleTimeString());
         hideTimePicker();
+    };
+
+    const reservationData = {
+        idField: fieldId,
+        date: selectedDate,
+        time: selectedTime,
     };
 
     if (isLoading) {
@@ -88,7 +98,11 @@ const AlquilerScreen = () => {
             </View>
             
             <View style={styles.containerButon}>
-                <Pressable style={styles.button}>
+                <Pressable style={styles.button} onPress={() => {
+                    triggerPost(reservationData);
+                    dispatch(addReservation(reservationData));
+                    navigation.navigate('Reservas');
+                }}>
                     <Text style={styles.buttonText}>Confirmar</Text>
                 </Pressable>
             </View>
