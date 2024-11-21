@@ -3,11 +3,14 @@ import { useSelector } from 'react-redux';
 import { useGetFieldQuery } from '../services/fieldsService';
 import { colors } from '../global/colors';
 import  Icon  from 'react-native-vector-icons/MaterialIcons'
+import { Calendar } from 'react-native-calendars';
+import { useState } from 'react';
 
 
 const AlquilerScreen = () => {
     const fieldId = useSelector(state => state.fieldsReducer.value.fieldId);
     const { data: field, error, isLoading } = useGetFieldQuery(fieldId);
+    const [selectedDate, setSelectedDate] = useState('');
 
     if (isLoading) {
         return <ActivityIndicator size="large" color="#0000ff" />
@@ -35,10 +38,22 @@ const AlquilerScreen = () => {
             <View style={styles.containerTipo}>
                 <Text style={styles.textUTipo}>{field.tipo}</Text>
             </View>
+
             <View style={styles.containerDate}>
                 <Icon name="date-range" size={40} color={colors.Verde} />
                 <Text style={styles.textDate}>Fecha</Text>
             </View>
+            <View style={styles.containerFecha}>
+                <Text style={styles.textFecha}>{selectedDate}</Text>
+            </View>
+            <Calendar
+                    onDayPress={(day) => {
+                        setSelectedDate(day.dateString);
+                    }}
+                    markedDates={{
+                        [selectedDate]: { selected: true, marked: true, selectedColor: 'green' }
+                    }}
+            />
             <View style={styles.containerHour}>
                 <Icon name="schedule" size={40} color={colors.Verde} />
                 <Text style={styles.textHour}>Hora</Text>
@@ -106,6 +121,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10,
+        marginTop: 20,
     },
     textHour: {
         fontSize: 20,
@@ -138,6 +154,13 @@ const styles = StyleSheet.create({
         marginLeft: 60,
     },
     textUTipo: {
+        fontSize: 20,
+    },
+    containerFecha: {
+        marginBottom: 10,
+        marginLeft: 60,
+    },
+    textFecha: {
         fontSize: 20,
     },
 })
