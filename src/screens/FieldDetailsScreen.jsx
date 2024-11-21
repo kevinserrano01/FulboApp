@@ -1,10 +1,13 @@
-import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, FlatList, Pressable, ActivityIndicator } from 'react-native'
 import MapView, { Marker } from 'react-native-maps';
+import { useSelector } from 'react-redux';
+import { useGetFieldQuery } from '../services/fieldsService';
 
-const FieldDetailsScreen = ({route}) => {
-  const { nombre, ubicacion, tipo, coordenadas, descripcion, precio, opiniones } = route.params;
+const FieldDetailsScreen = ({navigation}) => {
+  const fieldId = useSelector(state => state.fieldsReducer.value.fieldId);
+  const { data: field, error, isLoading } = useGetFieldQuery(fieldId);
 
-  const renderOpinionItem = ({ item }) => (
+  const renderOpinionItem = ({item}) => (
     <View style={styles.opinionContainer}>
       <View style={styles.opinionHeader}>
         <Text style={styles.opinionUser}>{item.usuario}</Text>
@@ -16,35 +19,55 @@ const FieldDetailsScreen = ({route}) => {
 
   const ListHeaderComponent = () => (
     <View style={styles.detailsContainer}>
-      {coordenadas && (
+      {field.coordenadas && (
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: coordenadas.latitude,
-            longitude: coordenadas.longitude,
+            latitude: field.coordenadas.latitude,
+            longitude: field.coordenadas.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
         >
           <Marker
-            coordinate={{ latitude: coordenadas.latitude, longitude: coordenadas.longitude }}
-            title={nombre}
-            description={tipo}
+            coordinate={{ latitude: field.coordenadas.latitude, longitude: field.coordenadas.longitude }}
+            title={field.nombre}
+            description={field.ubicacion}
           />
         </MapView>
       )}
-      <Text style={styles.title}> 📌 {nombre}</Text>
-      <Text style={styles.info}> • {ubicacion}</Text>
-      <Text style={styles.info}> • {tipo}</Text>
-      <Text style={styles.info}> • {descripcion}</Text>
-      <Text style={styles.info}> • Precio por hora: {precio}</Text>
+      <Text style={styles.title}> 📌 {field.nombre}</Text>
+      <Text style={styles.info}> • {field.ubicacion}</Text>
+      <Text style={styles.info}> • {field.tipo}</Text>
+      <Text style={styles.info}> • {field.descripcion}</Text>
+      <Text style={styles.info}> • Precio por hora: {field.precio}</Text>
+      <View style={styles.buttonContainer}>
+        <Pressable 
+          style={styles.alquilaButton}
+          onPress={() => {
+            navigation.navigate('Alquiler');
+          }}
+        >
+          <Text style={styles.alquilarButtonText}>Alquilar</Text>
+        </Pressable>
+      </View>
       <Text style={styles.opiniones}>  Opiniones </Text>
     </View>
   );
 
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#0000ff" />
+  }
+
+  if (error) {
+    return <Text>Error: Error al cargar los detalles de la cancha</Text>;
+  }
+
+
+
   return (
     <FlatList
-      data={opiniones}
+      data={field.opiniones}
       keyExtractor={(item) => item.id.toString()}
       renderItem={renderOpinionItem}
       ListHeaderComponent={ListHeaderComponent}
@@ -105,5 +128,24 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'center',
     paddingTop: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  alquilaButton: {
+    flex: 1,
+    backgroundColor: '#28a745',
+    paddingVertical: 15,
+    borderRadius: 25,
+    alignItems: 'center',
+  },
+  alquilarButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 })
