@@ -25,6 +25,16 @@ const AlquilerScreen = () => {
                 <Icon name="location-on" size={40} color={colors.Verde} />
                 <Text style={styles.textLocation}>Ubicacion</Text>
             </View>
+            <View style={styles.containerUbicacion}>
+                <Text style={styles.textUbicacion}>{field.ubicacion}</Text>
+            </View>
+            <View style={styles.containerType}>
+                <Icon name="sports-soccer" size={40} color={colors.Verde} />
+                <Text style={styles.textType}>Tipo</Text>
+            </View>
+            <View style={styles.containerTipo}>
+                <Text style={styles.textUTipo}>{field.tipo}</Text>
+            </View>
             <View style={styles.containerDate}>
                 <Icon name="date-range" size={40} color={colors.Verde} />
                 <Text style={styles.textDate}>Fecha</Text>
@@ -65,9 +75,19 @@ const styles = StyleSheet.create({
     containerLocation: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 30,
+        marginBottom: 10,
     },
     textLocation: {
+        fontSize: 20,
+        marginLeft: 20,
+        fontWeight: 'bold',
+    },
+    containerType: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    textType: {
         fontSize: 20,
         marginLeft: 20,
         fontWeight: 'bold',
@@ -75,7 +95,7 @@ const styles = StyleSheet.create({
     containerDate: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 30,
+        marginBottom: 10,
     },
     textDate: {
         fontSize: 20,
@@ -85,7 +105,7 @@ const styles = StyleSheet.create({
     containerHour: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 30,
+        marginBottom: 10,
     },
     textHour: {
         fontSize: 20,
@@ -105,5 +125,19 @@ const styles = StyleSheet.create({
         color: colors.Blanco,
         fontSize: 20,
         fontWeight: 'bold',
+    },
+    containerUbicacion: {
+        marginBottom: 30,
+        marginLeft: 60,
+    },
+    textUbicacion: {
+        fontSize: 20,
+    },
+    containerTipo: {
+        marginBottom: 30,
+        marginLeft: 60,
+    },
+    textUTipo: {
+        fontSize: 20,
     },
 })

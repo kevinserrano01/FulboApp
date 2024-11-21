@@ -45,10 +45,10 @@ const FieldDetailsScreen = ({navigation}) => {
         <Pressable 
           style={styles.alquilaButton}
           onPress={() => {
-            navigation.navigate('Alquiler');
+            navigation.navigate('Reservar');
           }}
         >
-          <Text style={styles.alquilarButtonText}>Alquilar</Text>
+          <Text style={styles.alquilarButtonText}>Reservar</Text>
         </Pressable>
       </View>
       <Text style={styles.opiniones}>  Opiniones </Text>

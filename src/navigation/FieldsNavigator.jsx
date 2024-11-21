@@ -3,6 +3,7 @@ import FieldsScreen from '../screens/FieldsScreen'
 import FieldDetailsScreen from '../screens/FieldDetailsScreen'
 import Header from '../components/Header'
 import AlquilerScreen from '../screens/AlquilerScreen'
+import { colors } from '../global/colors'
 
 const Stack = createNativeStackNavigator()
 
@@ -11,13 +12,19 @@ const FieldsNavigator = () => {
     <Stack.Navigator
     initialRouteName="Canchas"
     screenOptions={{
-      headerShown: true,
-      header: ({route}) => <Header subtitle={route.name}/>
+      headerStyle: {
+        backgroundColor: colors.Verde,
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     }}
+
     >
       <Stack.Screen name="Canchas" component={FieldsScreen} />
       <Stack.Screen name="Cancha" component={FieldDetailsScreen} />
-      <Stack.Screen name="Alquiler" component={AlquilerScreen} />
+      <Stack.Screen name="Reservar" component={AlquilerScreen} />
     </Stack.Navigator>
   )
 }
