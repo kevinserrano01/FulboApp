@@ -1,6 +1,9 @@
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Pressable } from 'react-native'
 import { useSelector } from 'react-redux';
 import { useGetFieldQuery } from '../services/fieldsService';
+import { colors } from '../global/colors';
+import  Icon  from 'react-native-vector-icons/MaterialIcons'
+
 
 const AlquilerScreen = () => {
     const fieldId = useSelector(state => state.fieldsReducer.value.fieldId);
@@ -15,14 +18,92 @@ const AlquilerScreen = () => {
     }
 
   return (
-    <View>
-        <Text>AlquilerScreen</Text>
-        <Text>{field.id}</Text>
-        <Text>{field.nombre}</Text>
-    </View>
+    <ScrollView style={styles.container}>
+        <View style={styles.containerAlquiler}>
+            <Text style={styles.title}>Elegir fecha y horario</Text>
+            <View style={styles.containerLocation}>
+                <Icon name="location-on" size={40} color={colors.Verde} />
+                <Text style={styles.textLocation}>Ubicacion</Text>
+            </View>
+            <View style={styles.containerDate}>
+                <Icon name="date-range" size={40} color={colors.Verde} />
+                <Text style={styles.textDate}>Fecha</Text>
+            </View>
+            <View style={styles.containerHour}>
+                <Icon name="schedule" size={40} color={colors.Verde} />
+                <Text style={styles.textHour}>Hora</Text>
+            </View>
+            <View style={styles.containerButon}>
+                <Pressable style={styles.button}>
+                    <Text style={styles.buttonText}>Confirmar</Text>
+                </Pressable>
+            </View>
+        </View>
+    </ScrollView>
   )
 }
 
 export default AlquilerScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 20,
+    },
+    containerAlquiler: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: colors.Blanco,
+        borderRadius: 20,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 40,
+        textAlign: 'center',
+    },
+    containerLocation: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 30,
+    },
+    textLocation: {
+        fontSize: 20,
+        marginLeft: 20,
+        fontWeight: 'bold',
+    },
+    containerDate: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 30,
+    },
+    textDate: {
+        fontSize: 20,
+        marginLeft: 20,
+        fontWeight: 'bold',
+    },
+    containerHour: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 30,
+    },
+    textHour: {
+        fontSize: 20,
+        marginLeft: 20,
+        fontWeight: 'bold',
+    },
+    containerButon: {
+        width: '100%',
+    },
+    button: {
+        backgroundColor: colors.Verde,
+        padding: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: colors.Blanco,
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+})
