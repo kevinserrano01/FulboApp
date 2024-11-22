@@ -13,17 +13,16 @@ const ReservationsScreen = ({navigation}) => {
   const renderReservationItem = ({item}) => {
     return (
       <FlatCard style={styles.receiptContainer}>
-        <Text style={styles.title}>Reserva nro: {item.id}</Text>
-        <Text style={styles.date}>Creado el {item.createdAt} Hs.</Text>
-        <Text style={styles.total}> {item.items[0].name} </Text>
-        <Text style={styles.total}> {item.items[0].location} </Text>
-        <Text style={styles.total}> {item.items[0].type} </Text>
-        <Text style={styles.total}> {item.items[0].day} </Text>
+        <Text style={styles.title}>Tu reserva</Text>
+        <Text style={styles.date}>Codigo reserva: {item["reservation"].id}</Text>
+        <Text style={styles.total}> Ubicacion:  </Text>
+        <Text style={styles.total}>Dia: {item["reservation"].date} Hs.</Text>
+        <Text style={styles.total}> Hora: {item["reservation"].time} </Text>
         <Pressable 
           style={styles.buttomRemoveReservation}
-          onPress={() => dispatch(removeReservation(item.id))}
+          onPress={() => dispatch(removeReservation(item["reservation"].id))}
         >
-          <Text style={styles.textRemoveReservation}>Eliminar reserva</Text>
+          <Text style={styles.textRemoveReservation}>Cancelar reserva</Text>
         </Pressable>
       </FlatCard>
     )
@@ -48,7 +47,7 @@ const ReservationsScreen = ({navigation}) => {
   return (
         <FlatList
           data={reservations}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item["reservation"].id}
           renderItem={renderReservationItem}
         />
   )

@@ -8,6 +8,8 @@ import { useState } from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { addReservation } from '../features/reservations/reservationSlice';
 import { usePostReservationMutation } from '../services/reservationsService';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid'; // Generar ids unicos
 
 
 const AlquilerScreen = ({navigation}) => {
@@ -33,9 +35,11 @@ const AlquilerScreen = ({navigation}) => {
     };
 
     const reservationData = {
+        id: uuidv4(), // Genera un id unico para la reserva
         idField: fieldId,
         date: selectedDate,
         time: selectedTime,
+        // idUser: idUser, // Falta implementar
     };
 
     if (isLoading) {
