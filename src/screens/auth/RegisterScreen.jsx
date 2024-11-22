@@ -23,7 +23,6 @@ const RegisterScreen = ({navigation}) => {
     }, [result])
 
     const onsubmit = () => {
-      console.log(email, password)
       if (password !== confirmPassword) {
           alert("Las contraseñas no coinciden")
           return

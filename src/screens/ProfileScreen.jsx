@@ -5,11 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
 import { colors } from '../global/colors'
 import CameraIcon from '../components/CameraIcon';
+import { clearUser } from '../features/auth/authSlice';
 
 const ProfileScreen = () => {
     const [modalVisible, setModalVisible] = useState(false);
-    const user = "Kevin"; // useSelector(state=>state.authReducer.value.email);
-    const image = null; // useSelector(state=>state.authReducer.value.profileImage)
+    const user = useSelector(state=>state.authReducer.value.email);
+    const image = useSelector(state=>state.authReducer.value.profileImage)
+    const dispatch = useDispatch();
 
     const editProfileHandle = () => {
         console.log('Editando perfil');
@@ -24,6 +26,7 @@ const ProfileScreen = () => {
     };
 
     const LogoutHandle = () => {
+      dispatch(clearUser())
       console.log('Cerrando Sesión');
     };
 
@@ -56,7 +59,7 @@ const ProfileScreen = () => {
             <Text style={styles.buttonText}>Eliminar cuenta</Text>
           </Pressable>
           <Pressable style={styles.button} onPress={LogoutHandle}>
-            <Text style={styles.buttonText}>Cerrar sesión</Text>
+            <Text style={styles.buttonTextLogout}>Cerrar sesión</Text>
           </Pressable>
         </View>
 
@@ -87,79 +90,84 @@ const styles = StyleSheet.create({
     padding: 32,
     justifyContent: 'center',
     alignItems: 'center'
-},
-buttonContainer: {
-  width: '100%',
-  backgroundColor: 'white',
-  borderRadius: 15,
-  marginTop: 180,
-  justifyContent: 'space-around',
-  alignItems: 'center',
-  elevation: 5, // Para sombra en Android
-  shadowColor: '#000', // Para sombra en iOS
-  shadowOffset: { width: 0, height: 2 }, // Para sombra en iOS
-  shadowOpacity: 0.25, // Para sombra en iOS
-  shadowRadius: 3.84, // Para sombra en iOS
-},
-button: {
-  backgroundColor: colors.Blanco,
-  paddingVertical: 10,
-  paddingHorizontal: 20,
-  marginVertical: 10,
-  width: '100%',
-  alignItems: 'center',
-},
-buttonText: {
-  color: colors.Negro,
-  fontSize: 18,
-  fontWeight: 'bold',
-},
-imageProfileContainer: {
-    width: 128,
-    height: 128,
-    borderRadius: 128,
-    backgroundColor: colors.Verde,
-    justifyContent: 'center',
-    alignItems: 'center'
-},
-textProfilePlaceHolder: {
-    color: colors.Negro,
-    fontSize: 48,
-},
-profileData: {
-    paddingVertical: 16,
-    fontSize: 16
-},
-cameraIcon: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-},
-profileImage: {
-    width: 128,
-    height: 128,
-    borderRadius: 128
-},
-modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
+  },
+  buttonContainer: {
+    width: '100%',
+    backgroundColor: 'white',
+    borderRadius: 15,
+    marginTop: 200,
+    justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-},
-fullImage: {
-    width: '90%',
-    height: '70%',
-    resizeMode: 'contain',
-},
-closeButton: {
-    position: 'absolute',
-    top: 40,
-    right: 20,
-    zIndex: 1,
-},
-closeButtonText: {
-    fontSize: 30,
-    color: '#FFF',
-    fontWeight: 'bold'
-},
+    elevation: 5, // Para sombra en Android
+    shadowColor: '#000', // Para sombra en iOS
+    shadowOffset: { width: 0, height: 2 }, // Para sombra en iOS
+    shadowOpacity: 0.25, // Para sombra en iOS
+    shadowRadius: 3.84, // Para sombra en iOS
+  },
+  button: {
+    backgroundColor: colors.Blanco,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginVertical: 10,
+    width: '100%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: colors.Negro,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  imageProfileContainer: {
+      width: 128,
+      height: 128,
+      borderRadius: 128,
+      backgroundColor: colors.Verde,
+      justifyContent: 'center',
+      alignItems: 'center'
+  },
+  textProfilePlaceHolder: {
+      color: colors.Negro,
+      fontSize: 48,
+  },
+  profileData: {
+      paddingVertical: 16,
+      fontSize: 16
+  },
+  cameraIcon: {
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+  },
+  profileImage: {
+      width: 128,
+      height: 128,
+      borderRadius: 128
+  },
+  modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+  },
+  fullImage: {
+      width: '90%',
+      height: '70%',
+      resizeMode: 'contain',
+  },
+  closeButton: {
+      position: 'absolute',
+      top: 40,
+      right: 20,
+      zIndex: 1,
+  },
+  closeButtonText: {
+      fontSize: 30,
+      color: '#FFF',
+      fontWeight: 'bold'
+  },
+  buttonTextLogout: {
+    color: colors.Rojo,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 })

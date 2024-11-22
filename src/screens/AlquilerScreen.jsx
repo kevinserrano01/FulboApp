@@ -19,6 +19,7 @@ const AlquilerScreen = ({navigation}) => {
     const [selectedTime, setSelectedTime] = useState('');
     const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
     const [triggerPost, result] = usePostReservationMutation();
+    const localId = useSelector(state => state.authReducer.value.localId)
     dispatch = useDispatch();
 
     const showTimePicker = () => {
@@ -37,9 +38,9 @@ const AlquilerScreen = ({navigation}) => {
     const reservationData = {
         id: uuidv4(), // Genera un id unico para la reserva
         idField: fieldId,
+        idUser: localId,
         date: selectedDate,
         time: selectedTime,
-        // idUser: idUser, // Falta implementar
     };
 
     if (isLoading) {

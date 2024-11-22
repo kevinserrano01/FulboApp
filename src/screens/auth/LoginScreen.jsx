@@ -1,8 +1,29 @@
 import { StyleSheet, Text, View, TextInput, ImageBackground, Pressable } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import { colors } from '../../global/colors';
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { useLoginMutation } from '../../services/authService'
+import { setUser } from '../../features/auth/authSlice'
 
 const LoginScreen = ({navigation}) => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [rememberMe, setRememberMe] = useState(false)
+    const [triggerLogin, result] = useLoginMutation()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+      if (result.isSuccess) {
+        dispatch(setUser(result.data))
+      }
+    }, [result])
+
+    const onsubmit = ()=>{
+      triggerLogin({email,password})
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -21,6 +42,7 @@ const LoginScreen = ({navigation}) => {
       <View style={styles.formContainer}>
         <Text style={styles.subtitle}>Iniciar sesión</Text>
         <TextInput
+          onChangeText={(text) => setEmail(text)}
           style={styles.input}
           placeholder="Email"
           placeholderTextColor="#ccc"
@@ -28,6 +50,7 @@ const LoginScreen = ({navigation}) => {
           autoCapitalize="none"
         />
         <TextInput
+          onChangeText={(text) => setPassword(text)}
           style={styles.input}
           placeholder="Contraseña"
           placeholderTextColor="#ccc"
@@ -35,7 +58,10 @@ const LoginScreen = ({navigation}) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.button}>
+        <Pressable
+          onPress={onsubmit} 
+          style={styles.button}
+        >
           <Text style={styles.buttonText}>Ingresar</Text>
         </Pressable>
         <Pressable style={styles.registerButton} onPress={() => navigation.navigate('Register')}>

@@ -5,6 +5,7 @@ import FlatCard from '../components/FlatCard'
 import { useGetReservationsQuery } from '../services/reservationsService'
 import { useDispatch } from 'react-redux'
 import { removeReservation } from '../features/reservations/reservationSlice'
+import { useEffect } from 'react'
 
 const ReservationsScreen = ({navigation}) => {
     const { data: reservations, error, isLoading } = useGetReservationsQuery();
@@ -16,7 +17,7 @@ const ReservationsScreen = ({navigation}) => {
         <Text style={styles.title}>Tu reserva</Text>
         <Text style={styles.date}>Codigo reserva: {item["reservation"].id}</Text>
         <Text style={styles.total}> Ubicacion:  </Text>
-        <Text style={styles.total}>Dia: {item["reservation"].date} Hs.</Text>
+        <Text style={styles.total}>Dia: {item["reservation"].date}</Text>
         <Text style={styles.total}> Hora: {item["reservation"].time} </Text>
         <Pressable 
           style={styles.buttomRemoveReservation}
