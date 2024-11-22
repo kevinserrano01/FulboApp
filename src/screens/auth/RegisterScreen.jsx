@@ -1,8 +1,36 @@
 import { StyleSheet, Text, View, TextInput, ImageBackground, Pressable } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors } from '../../global/colors';
+import { useState, useEffect } from 'react';
+import { useRegisterMutation } from '../../services/authService';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../features/auth/authSlice';
 
 const RegisterScreen = ({navigation}) => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [triggerSignup, result] = useRegisterMutation()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+      if (result.status === "rejected") {
+          console.log("Error al agregar usuario", result)
+      } else if (result.status === "fulfilled") {
+          console.log("Usuario agregado correctamente")
+          dispatch(setUser(result.data))
+      }
+    }, [result])
+
+    const onsubmit = () => {
+      console.log(email, password)
+      if (password !== confirmPassword) {
+          alert("Las contraseñas no coinciden")
+          return
+      }
+      triggerSignup({ email, password })
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -20,13 +48,14 @@ const RegisterScreen = ({navigation}) => {
       </View>
       <View style={styles.formContainer}>
         <Text style={styles.subtitle}>Registrarse</Text>
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           placeholder="Nombre de usuario"
           placeholderTextColor="#ccc"
           autoCapitalize="none"
-        />
+        /> */}
         <TextInput
+          onChangeText={(text) => setEmail(text)}
           style={styles.input}
           placeholder="Email"
           placeholderTextColor="#ccc"
@@ -34,18 +63,32 @@ const RegisterScreen = ({navigation}) => {
           autoCapitalize="none"
         />
         <TextInput
+          onChangeText={(text) => setPassword(text)}
           style={styles.input}
           placeholder="Contraseña"
           placeholderTextColor="#ccc"
           secureTextEntry
         />
+        <TextInput
+          onChangeText={(text) => setConfirmPassword(text)}
+          style={styles.input}
+          placeholder="Repetir contraseña"
+          placeholderTextColor="#ccc"
+          secureTextEntry
+        />
       </View>
       <View style={styles.buttonContainer}>
-        <Pressable style={styles.button}>
-          <Text style={styles.buttonText}>Registrarme</Text>
+        <Pressable 
+          onPress={onsubmit}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Crear cuenta</Text>
         </Pressable>
-        <Pressable style={styles.registerButton}>
-          <Text style={styles.registerButtonText}>Ingresar como invitado</Text>
+        <Pressable
+          onPress={() => navigation.goBack()}
+          style={styles.registerButton}
+        >
+          <Text style={styles.registerButtonText}>Volver</Text>
         </Pressable>
       </View>
     </View>
