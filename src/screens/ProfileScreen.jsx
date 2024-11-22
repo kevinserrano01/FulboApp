@@ -6,12 +6,42 @@ import * as ImagePicker from 'expo-image-picker';
 import { colors } from '../global/colors'
 import CameraIcon from '../components/CameraIcon';
 import { clearUser } from '../features/auth/authSlice';
+import { usePutProfileImageMutation } from '../services/userService';
+import { setProfileImage } from '../features/auth/authSlice';
 
 const ProfileScreen = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const user = useSelector(state=>state.authReducer.value.email);
-    const image = useSelector(state=>state.authReducer.value.profileImage)
+    const image = useSelector(state=>state.authReducer.value.profileImage);
     const dispatch = useDispatch();
+    const [triggerPutProfileImage, result] = usePutProfileImageMutation();
+    const localId = useSelector(state => state.authReducer.value.localId)
+
+    const verifyCameraPermissions = async () => {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== 'granted') {
+          alert('Se necesita permiso para acceder a la cámara');
+          return false;
+      }
+      return true;
+    };
+
+    const pickImage = async () => {
+      const hasPermission = await verifyCameraPermissions();
+      if (!hasPermission) return;
+      let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All, // All files
+          allowsEditing: true, // Editar imagen
+          aspect: [1, 1], // Aspect de la imagen
+          base64: true, // Guardar la imagen en base64
+          quality: 1, // Calidad de la imagen
+      });
+
+      if (!result.cancelled) {
+          dispatch(setProfileImage(`data:image/jpeg;base64,${result.assets[0].base64}`)); // Guardar la imagen en el store
+          triggerPutProfileImage({image: `data:image/jpeg;base64,${result.assets[0].base64}`, localId}); // Enviar la imagen al servidor
+      }
+  };
 
     const editProfileHandle = () => {
         console.log('Editando perfil');
@@ -42,11 +72,11 @@ const ProfileScreen = () => {
                     :
                     <Text style={styles.textProfilePlaceHolder}>{user.charAt(0).toUpperCase()}</Text>
             }
-            <Pressable style={({ pressed }) => [{ opacity: pressed ? 0.90 : 1 }, styles.cameraIcon]} >
+            <Pressable onPress={pickImage} style={({ pressed }) => [{ opacity: pressed ? 0.90 : 1 }, styles.cameraIcon]} >
                 <CameraIcon />
             </Pressable>
         </View>
-        <Text style={styles.profileData}>Usuario: {user}</Text>
+        <Text style={styles.profileData}>Email: {user}</Text>
 
         <View style={styles.buttonContainer}>
           <Pressable style={styles.button} onPress={editProfileHandle}>
@@ -131,7 +161,8 @@ const styles = StyleSheet.create({
   },
   profileData: {
       paddingVertical: 16,
-      fontSize: 16
+      fontSize: 16,
+      fontWeight: 'bold',
   },
   cameraIcon: {
       position: 'absolute',
