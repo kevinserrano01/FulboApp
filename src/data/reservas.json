@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "userId": 1,
+        "createdAt": "2024-11-19",
+        "items": [
+            {
+                "id": 1,
+                "name": "Cancha El Fortín",
+                "location": "Calle San Martín 123, Salta",
+                "type": "Fútbol 5",
+                "day": "2024-09-02",
+                "hour": "16:00 - 17:00",
+                "price": 2500
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "userId": 2,
+        "createdAt": "2024-11-20",
+        "items": [
+            {
+                "id": 2,
+                "name": "Cancha Los Amigos",
+                "location": "Av. Belgrano 987, Salta",
+                "type": "Fútbol 8",
+                "day": "2024-09-02",
+                "hour": "14:00 - 15:00",
+                "price": 3000
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "userId": 3,
+        "createdAt": "2024-11-25",
+        "items": [
+            {
+                "id": 3,
+                "name": "Cancha La Liga",
+                "location": "Calle Alvear 456, Salta",
+                "type": "Fútbol 5",
+                "day": "2024-09-03",
+                "hour": "08:00 - 09:00",
+                "price": 2800
+            }
+        ]
+    }
+]
