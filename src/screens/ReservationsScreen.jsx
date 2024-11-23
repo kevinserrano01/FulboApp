@@ -3,25 +3,29 @@ import { colors } from '../global/colors'
 import  Icon  from 'react-native-vector-icons/MaterialIcons'
 import FlatCard from '../components/FlatCard'
 import { useGetReservationsQuery } from '../services/reservationsService'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { removeReservation } from '../features/reservations/reservationSlice'
 import { useEffect } from 'react'
 
 const ReservationsScreen = ({navigation}) => {
-    const { data: reservations, error, isLoading } = useGetReservationsQuery();
+    const reservas = useSelector(state => state.reservationsReducer.value.reservations)
+    const reservationLenght = useSelector(state => state.reservationsReducer.value.reservationLength)
+    const localId = useSelector(state => state.authReducer.value.localId)
     const dispatch = useDispatch()
+    // Obtener solo las reservas de este usuario logueado
+    const userReservations = reservas.filter(reservation => reservation.idUser === localId)
 
   const renderReservationItem = ({item}) => {
     return (
       <FlatCard style={styles.receiptContainer}>
         <Text style={styles.title}>Tu reserva</Text>
-        <Text style={styles.date}>Codigo reserva: {item["reservation"].id}</Text>
+        <Text style={styles.date}>Codigo reserva: {item.id}</Text>
         <Text style={styles.total}> Ubicacion:  </Text>
-        <Text style={styles.total}>Dia: {item["reservation"].date}</Text>
-        <Text style={styles.total}> Hora: {item["reservation"].time} </Text>
+        <Text style={styles.total}>Dia: {item.date}</Text>
+        <Text style={styles.total}> Hora: {item.time} </Text>
         <Pressable 
           style={styles.buttomRemoveReservation}
-          onPress={() => dispatch(removeReservation(item["reservation"].id))}
+          onPress={() => dispatch(removeReservation(item.id))}
         >
           <Text style={styles.textRemoveReservation}>Cancelar reserva</Text>
         </Pressable>
@@ -29,28 +33,26 @@ const ReservationsScreen = ({navigation}) => {
     )
   }
 
-  if (isLoading) {
-    return <ActivityIndicator size="large" color="#0000ff" />
-  }
-
-  if (error) {
-    return <Text>Error: Error al cargar las Reservas</Text>
-  }
-
-  if (!reservations || reservations.length === 0) {
-    <View style={styles.container}>
-        <Icon name="receipt-long" size={100} color="#ccc" />
-        <Text style={styles.cartScreenTitle}>Sin reservas</Text>
-        <Button title="Explorar canchas" onPress={() => navigation.navigate('Explorar')} />
-    </View>
-  }
-
   return (
-        <FlatList
-          data={reservations}
-          keyExtractor={item => item["reservation"].id}
-          renderItem={renderReservationItem}
-        />
+    <>
+      {
+        reservationLenght === 0 ? (
+          <View style={styles.container}>
+            <Icon name="receipt-long" size={100} color="#ccc" />
+            <Text style={styles.cartScreenTitle}>Sin reservas</Text>
+            <Button title="Explorar canchas" onPress={() => navigation.navigate('Explorar')} />
+          </View>
+        ) : (
+          <FlatList
+            data={userReservations}
+            keyExtractor={item => item.id}
+            renderItem={renderReservationItem}
+          />
+        )
+      }
+    </>
+    
+        
   )
 }
 

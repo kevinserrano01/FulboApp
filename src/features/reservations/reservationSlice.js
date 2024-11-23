@@ -5,11 +5,13 @@ const reservationSlice = createSlice({
   initialState: {
     value: {
       reservations: [],
+      reservationLength: 0,
     },
   },
   reducers: {
     addReservation: (state, action) => {
       state.value.reservations.push(action.payload);
+      state.value.reservationLength += 1;
     },
     removeReservation: (state, action) => {
       state.value.reservations = state.value.reservations.filter(

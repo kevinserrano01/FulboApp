@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, ScrollView, FlatList, Pressable, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, FlatList, Pressable, ActivityIndicator, TextComponent } from 'react-native'
 import MapView, { Marker } from 'react-native-maps';
 import { useSelector } from 'react-redux';
 import { useGetFieldQuery } from '../services/fieldsService';
+import { colors } from '../global/colors';
 
 const FieldDetailsScreen = ({navigation}) => {
   const fieldId = useSelector(state => state.fieldsReducer.value.fieldId);
@@ -41,6 +42,18 @@ const FieldDetailsScreen = ({navigation}) => {
       <Text style={styles.info}> • {field.tipo}</Text>
       <Text style={styles.info}> • {field.descripcion}</Text>
       <Text style={styles.info}> • Precio por hora: {field.precio}</Text>
+      <Text style={styles.info}> • Dias disponibles:</Text>
+      <View style={styles.containerDays}>
+            {field.dias_disponibles && field.dias_disponibles.map(dias => (
+              <Text key={dias} style={styles.days}>{dias}</Text>
+            ))}
+      </View>
+      <Text style={styles.info}> • Horarios disponibles:</Text>
+      <View style={styles.containerHours}>
+            {field.horarios_disponibles && field.horarios_disponibles.map(hora => (
+              <Text key={hora} style={styles.hours}>{hora}</Text>
+            ))}
+      </View>
       <View style={styles.buttonContainer}>
         <Pressable 
           style={styles.alquilaButton}
@@ -147,5 +160,27 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  containerDays: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    padding: 10,
+  },
+  days: {
+    backgroundColor: colors.AmarilloClaro,
+    padding: 5,
+    margin: 5,
+    borderRadius: 20,
+  },
+  containerHours: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    padding: 10,
+  },
+  hours: {
+    backgroundColor: colors.AmarilloClaro,
+    padding: 5,
+    margin: 5,
+    borderRadius: 20,
   },
 })
