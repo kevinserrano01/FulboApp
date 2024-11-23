@@ -98,9 +98,67 @@
       "descripcion": "Cancha de fútbol 8 para jugar entre varios amigos.",
       "tipo": "Fútbol 8",
       "dias_disponibles": ["Lunes", "Martes", "Miércoles", "Sábado"],
-      "horarios_disponibles": ["08:00 - 09:30", "13:00 - 14:30", "15:00 - 16:30", "19:00 - 20:30"],
+      "horarios_disponibles": ["08:00", "09:30", "13:00", "14:30", "15:00", "16:30", "19:00", "20:30"],
       "precio": 3200,
       "opiniones": []
+    },
+    {
+      "id": 5,
+      "nombre": "Popeye Fútbol",
+      "ubicacion": "Circunvalación, Salta",
+      "coordenadas": {
+        "latitude": -24.770295941604733,
+        "longitude": -65.41290054933035
+      },
+      "imagen": "https://via.placeholder.com/300",
+      "descripcion": "Cancha de fútbol 5 con césped sintético y excelente iluminación.",
+      "tipo": "Fútbol 5",
+      "dias_disponibles": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+      "horarios_disponibles": ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "00:00"],
+      "precio": 10000,
+      "opiniones": [
+        {
+          "id": 7,
+          "usuario": "Miguel Larusso",
+          "comentario": "Las instalaciones son muy buenas, pero el precio es un poco alto.",
+          "puntuacion": 4
+        },
+        {
+          "id": 8,
+          "usuario": "David Aguirre",
+          "comentario": "Una de las mejores canchas de la ciudad, súper recomendable.",
+          "puntuacion": 5
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "nombre": "Aero Club Fútbol",
+      "ubicacion": "Av. Bolivia 3400, Salta",
+      "coordenadas": {
+        "latitude": -24.747987947449218, 
+        "longitude": -65.4134911362762
+      },
+      "imagen": "https://via.placeholder.com/300",
+      "descripcion": "Cancha de fútbol 5 y futbol 8 para jugar entre varios amigos.",
+      "tipo": "Fútbol 5 y 8",
+      "dias_disponibles": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+      "horarios_disponibles": ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "00:00"],
+      "precio": 12000,
+      "opiniones": [
+        {
+          "id": 9,
+          "usuario": "Julian Gomez",
+          "comentario": "Las instalaciones son muy buenas, pero el precio es un poco alto.",
+          "puntuacion": 4
+        },
+        {
+          "id": 10,
+          "usuario": "Yesica Romero",
+          "comentario": "Una de las mejores canchas de la ciudad, súper recomendable.",
+          "puntuacion": 5
+        }
+      ]
     }
 ]
   
