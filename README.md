@@ -72,7 +72,8 @@ EXPO_PUBLIC_GEOCODING_API_KEY = "tu-google-maps-api-key"
 
 ### 📌 **Vista previa de aplicacion**
 
-![Captura de pantalla](./screenshots/preview.png)
+![Captura de pantalla](./screenshots/preview1.png)
+![Captura de pantalla](./screenshots/preview2.png)
 
 ### 📌 **Flujos de trabajo:**
 
