@@ -105,7 +105,7 @@ const AlquilerScreen = ({navigation}) => {
             <View style={styles.containerButon}>
                 <Pressable style={styles.button} onPress={() => {
                     triggerPost(reservationData);
-                    dispatch(addReservation(reservationData));
+                    dispatch(addReservation({...reservationData, quantity: 1}));
                     navigation.navigate('Reservas');
                 }}>
                     <Text style={styles.buttonText}>Confirmar</Text>
