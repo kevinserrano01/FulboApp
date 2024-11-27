@@ -10,7 +10,7 @@ const Header = ({subtitle, navigation}) => {
         style={{position: 'absolute', left: 20, top: 60}}
         onPress={() => navigation.goBack()}
       >
-        <Icon name="arrow-back" size={40} color={colors.Blanco} />
+        <Icon name="arrow-back" size={37} color={colors.Blanco} />
       </Pressable>
       <Text style={styles.subtitle}>{subtitle}</Text>
     </View>
