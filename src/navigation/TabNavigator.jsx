@@ -5,28 +5,39 @@ import { colors } from '../global/colors';
 import FieldsNavigator from './FieldsNavigator';
 import ProfileNavigator from './ProfileNavigator';
 import ReservationsNavigator from './ReservationsNavigator';
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native"; // Importa esta función
 
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+
+    // Lógica para ocultar el BottomTab en Screen especificas
+    const getTabBarStyle = (route) => {
+        const routeName = getFocusedRouteNameFromRoute(route);
+        // Ocultar el BottomTab en Donaciones
+        if (routeName === "Donaciones" || routeName === "Acerca de" || routeName === "Reservar" || routeName === "Cancha") {
+          return { display: "none" };
+        }
+        return styles.tabBar;
+      };
+
   return (
     <Tab.Navigator
             initialRouteName="Explorar"
-            screenOptions={{
-                headerShown: false, // Quitar el header
-                tabBarShowLabel: true, // Quitar el texto de las pestañas
-                tabBarStyle: styles.tabBar,
-                tabBarActiveTintColor: colors.Naranja,
+            screenOptions={({ route }) => ({
+                headerShown: false, // Ocultar el header
+                tabBarStyle: getTabBarStyle(route), // Lógica dinámica
+                tabBarActiveTintColor: colors.Verde,
                 tabBarInactiveTintColor: colors.Gris,
-            }}
+            })}
         >
             <Tab.Screen 
                 name="Explorar"
                 component={FieldsNavigator}
                 options={{
                     tabBarIcon: ({ focused }) => (
-                        <Icon name="sports-soccer" color={focused?colors.Naranja:colors.Gris} size={32} />
+                        <Icon name="sports-soccer" color={focused?colors.Verde:colors.Gris} size={32} />
                     )
                 }}
             />
@@ -35,7 +46,7 @@ const TabNavigator = () => {
                 component={ReservationsNavigator}
                 options={{
                     tabBarIcon: ({ focused }) => (
-                        <Icon name="receipt-long" color={focused?colors.Naranja:colors.Gris} size={32} />
+                        <Icon name="receipt-long" color={focused?colors.Verde:colors.Gris} size={32} />
                     )
                 }}
             />
@@ -44,7 +55,7 @@ const TabNavigator = () => {
                 component={ProfileNavigator}
                 options={{
                     tabBarIcon: ({ focused }) => (
-                        <Icon name="person" color={focused?colors.Naranja:colors.Gris} size={32} />
+                        <Icon name="person" color={focused?colors.Verde:colors.Gris} size={32} />
                     )
                 }}
             />

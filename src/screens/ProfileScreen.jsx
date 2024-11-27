@@ -43,12 +43,12 @@ const ProfileScreen = ({navigation}) => {
       }
   };
 
-    const editProfileHandle = () => {
+    const sugerenciasHandle = () => {
         console.log('Sugerencias');
     };
 
-    const settingsHandle = () => {
-      console.log('Donaciones');
+    const donacionesHandle = () => {
+      navigation.navigate('Donaciones');
     };
 
     const acercaDeHandle = () => {
@@ -79,10 +79,10 @@ const ProfileScreen = ({navigation}) => {
         <Text style={styles.profileData}>Email: {user}</Text>
 
         <View style={styles.buttonContainer}>
-          <Pressable style={styles.button} onPress={editProfileHandle}>
+          <Pressable style={styles.button} onPress={sugerenciasHandle}>
             <Text style={styles.buttonText}>Sugerencias</Text>
           </Pressable>
-          <Pressable style={styles.button} onPress={settingsHandle}>
+          <Pressable style={styles.button} onPress={donacionesHandle}>
             <Text style={styles.buttonText}>Donaciones</Text>
           </Pressable>
           <Pressable style={styles.button} onPress={acercaDeHandle}>
