@@ -9,4 +9,5 @@ export const colors = {
   Amarillo: "#FFF100",
   Naranja: "#FF7D29",
   AmarilloClaro: "#FFF4B7",
+  verdeOscuro: "#16423C",
 };

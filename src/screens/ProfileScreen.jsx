@@ -9,7 +9,7 @@ import { clearUser } from '../features/auth/authSlice';
 import { usePutProfileImageMutation } from '../services/userService';
 import { setProfileImage } from '../features/auth/authSlice';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const user = useSelector(state=>state.authReducer.value.email);
     const image = useSelector(state=>state.authReducer.value.profileImage);
@@ -44,15 +44,15 @@ const ProfileScreen = () => {
   };
 
     const editProfileHandle = () => {
-        console.log('Editando perfil');
+        console.log('Sugerencias');
     };
 
     const settingsHandle = () => {
-      console.log('Configuraciones');
+      console.log('Donaciones');
     };
 
-    const DeleteAccountHandle = () => {
-      console.log('Eliminando Cuenta');
+    const acercaDeHandle = () => {
+      navigation.navigate('Acerca de');
     };
 
     const LogoutHandle = () => {
@@ -80,13 +80,13 @@ const ProfileScreen = () => {
 
         <View style={styles.buttonContainer}>
           <Pressable style={styles.button} onPress={editProfileHandle}>
-            <Text style={styles.buttonText}>Editar perfil</Text>
+            <Text style={styles.buttonText}>Sugerencias</Text>
           </Pressable>
           <Pressable style={styles.button} onPress={settingsHandle}>
-            <Text style={styles.buttonText}>Configuración</Text>
+            <Text style={styles.buttonText}>Donaciones</Text>
           </Pressable>
-          <Pressable style={styles.button} onPress={DeleteAccountHandle}>
-            <Text style={styles.buttonText}>Eliminar cuenta</Text>
+          <Pressable style={styles.button} onPress={acercaDeHandle}>
+            <Text style={styles.buttonText}>Acerca de</Text>
           </Pressable>
           <Pressable style={styles.button} onPress={LogoutHandle}>
             <Text style={styles.buttonTextLogout}>Cerrar sesión</Text>
