@@ -24,7 +24,13 @@ const FieldsNavigator = () => {
     >
       <Stack.Screen name="Canchas" component={FieldsScreen} />
       <Stack.Screen name="Cancha" component={FieldDetailsScreen} />
-      <Stack.Screen name="Reservar" component={AlquilerScreen} />
+      <Stack.Screen
+        name="Reservar"
+        component={AlquilerScreen}
+        options={{
+          tabBarStyle: { display: 'none' }
+        }}
+      />
     </Stack.Navigator>
   )
 }
