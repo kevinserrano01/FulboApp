@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, Pressable, Button, Linking, Modal } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Image, Pressable, Button, Linking, Modal, ImageBackground } from 'react-native'
 import { colors } from '../global/colors';
 import Header from '../components/Header';
 import packagejson from '../../package.json'
@@ -9,64 +9,73 @@ const DonacionesScreen = ({navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
 
   return (
+    <ImageBackground source={require('../../assets/backgrounds/donacionesBackground.png')} style={styles.backgroundImage}>
     <View style={styles.containerPadre}>
-      <Header subtitle="Donaciones" navigation={navigation} />
-      <View style={styles.container}>
-        <Text style={styles.title}> {packagejson.name} </Text>
-        <Text style={styles.subtitle}>¿POR QUÉ HICE ESTA APP?</Text>
-        <Text style={styles.parrafo}>Cree esta app porque pienso que es una gran ayuda para poder agilizar la reserva de una cancha. Ver tranquilamente las canchas ocupadas sin preguntar al dueño y esperar que te respondan.</Text>
-        <Text style={styles.parrafo}>Con tu contribucion podés ayudarme a mantener este proyecto para que siga disponible en la tienda </Text>
-        <Text style={styles.parrafo}>Si te gusta lo que hago y quieres apoyarme, puedes invitarme un cafecito haciendo click en "Donar un cafecito"</Text>
-        <View style={styles.buttomsContainer}>
-            <Pressable style={styles.button} onPress={() => setModalVisible(true)}>
-                <Text style={styles.buttonText}> ¿QUE ES CAFECITO? </Text>
-            </Pressable>
-            <Pressable style={styles.button} onPress={() => Linking.openURL('https://cafecito.app/fulbo_salta')}>
-                <Text style={styles.buttonText}>DONAR UN CAFECITO</Text>
-            </Pressable>
-        </View>
-      </View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.modalContainer}>
-            <Pressable style={styles.closeButton} onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.closeButtonText}>
-                <Icon name="close" size={40} color={colors.Negro}/>
-              </Text>
-            </Pressable>
-            
-          <View style={styles.modalView}>
-            <Text style={styles.modalTitle}>¿Qué es Cafecito?</Text>
-            <Text style={styles.modalText}>Cafecito es una plataforma que te permite apoyar a tus creadores favoritos con pequeñas donaciones, como si les estuvieras invitando un cafecito.</Text>
-            <Text style={styles.modalText}>Es una forma de agradecerles por su trabajo y ayudarles a seguir creando proyectos de calidad.</Text>
-            <View style={styles.cafecitoContainer}>
-                <Image source={require('../../assets/icons/cafecito.jpeg')} style={styles.icon} />
+        <Header subtitle="Donaciones" navigation={navigation} />
+        <View style={styles.container}>
+            <Text style={styles.title}> {packagejson.name} </Text>
+            <Text style={styles.subtitle}>¿POR QUÉ HICE ESTA APP?</Text>
+            <Text style={styles.parrafo}>Cree esta app porque pienso que es una gran ayuda para poder agilizar la reserva de una cancha. Ver tranquilamente las canchas ocupadas sin preguntar al dueño y esperar que te respondan.</Text>
+            <Text style={styles.parrafo}>Con tu contribucion podés ayudarme a mantener este proyecto para que siga disponible en la tienda </Text>
+            <Text style={styles.parrafo}>Si te gusta lo que hago y quieres apoyarme, puedes invitarme un cafecito haciendo click en "Donar un cafecito"</Text>
+            <View style={styles.buttomsContainer}>
+                <Pressable style={styles.button} onPress={() => setModalVisible(true)}>
+                    <Text style={styles.buttonText}> ¿QUE ES CAFECITO? </Text>
+                </Pressable>
+                <Pressable style={styles.button} onPress={() => Linking.openURL('https://cafecito.app/fulbo_salta')}>
+                    <Text style={styles.buttonText}>DONAR UN CAFECITO</Text>
+                </Pressable>
             </View>
-          </View>
         </View>
-      </Modal>
-    </View>
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+            setModalVisible(!modalVisible);
+            }}
+        >
+            <ImageBackground source={require('../../assets/backgrounds/donacionesBackground.png')} style={styles.backgroundImage}>
+            <View style={styles.modalContainer}>
+                <Pressable style={styles.closeButton} onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.closeButtonText}>
+                    <Icon name="close" size={40} color={colors.Blanco}/>
+                </Text>
+                </Pressable>
+                
+            <View style={styles.modalView}>
+                <Text style={styles.modalTitle}>¿Qué es Cafecito?</Text>
+                <Text style={styles.modalText}>Cafecito es una plataforma que te permite apoyar a tus creadores favoritos con pequeñas donaciones, como si les estuvieras invitando un cafecito.</Text>
+                <Text style={styles.modalText}>Es una forma de agradecerles por su trabajo y ayudarles a seguir creando proyectos de calidad.</Text>
+                <View style={styles.cafecitoContainer}>
+                    <Image source={require('../../assets/icons/cafecito.jpeg')} style={styles.icon} />
+                </View>
+            </View>
+            </View>
+            </ImageBackground>
+        </Modal>
+        </View>
+    </ImageBackground>
+    
   )
 }
 
 export default DonacionesScreen
 
 const styles = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover',
+    },
     containerPadre: {
         flex: 1,
-        backgroundColor: colors.verdeOscuro,
+        // backgroundColor: colors.verdeOscuro,
     },
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.verdeOscuro,
+        // backgroundColor: colors.verdeOscuro,
         padding: 20,
     },
     title: {
@@ -110,7 +119,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(211, 211, 211, 100)',
+        // backgroundColor: 'rgba(211, 211, 211, 100)',
     },
     modalView: {
         margin: 20,
